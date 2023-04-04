@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -17,19 +17,52 @@ describe('button control', () => {
   const onClickValue = true;
   const onHoverValue = true;
 
-  // it('clicks the button using fireEvent', () => {
+  // it('clicks the button using fireEvent', async () => {
   //   renderApp();
-  //   fireEvent.click(screen.getByTestId('button-target'));
+  //   const button = await screen.getByTestId('button-target')
+  //   fireEvent.click(button);
 
-  //   expect(screen.getByTestId('on-click-span')).toHaveTextContent(onClickValue);
-  //   expect(screen.getByTestId('on-hover-span')).toHaveTextContent(onHoverValue);
+  //   const click = await screen.getByTestId('on-click-span')
+  //   const hover = await screen.getByTestId('on-hover-span')
+
+  //   await waitFor(() => {
+  //     expect(click).toHaveTextContent(onClickValue);
+  //     expect(hover).toHaveTextContent(onHoverValue);
+  //   })
   // });
 
-  it('clicks the button using userEvent', () => {
+  it('clicks the button using userEvent', async () => {
     renderApp();
-    userEvent.click(screen.getByTestId('button-target'));
+    const button = await screen.getByTestId('button-target')
+    userEvent.click(button);
 
-    expect(screen.getByTestId('on-click-span')).toHaveTextContent(onClickValue);
-    expect(screen.getByTestId('on-hover-span')).toHaveTextContent(onHoverValue);
+    const click = await screen.getByTestId('on-click-span')
+    const hover = await screen.getByTestId('on-hover-span')
+
+    await waitFor(() => {
+      expect(click).toHaveTextContent(onClickValue);
+      expect(hover).toHaveTextContent(onHoverValue);
+    })
+  });
+});
+
+describe("input control", () => {
+  const renderApp = () => render(<App />);
+  const onTypeValue = true;
+  const onFocusValue = true;
+
+  it('clicks the button using userEvent', async () => {
+    renderApp();
+    const input = await screen.getByTestId("input-target");
+    userEvent.type(input, "hello");
+
+    const focus = await screen.getByTestId("on-focus-span");
+    const type = await screen.getByTestId("on-type-span");
+    
+    await waitFor(() => {
+      expect(input).toHaveDisplayValue("hello");
+      expect(focus).toHaveTextContent(onFocusValue);
+      expect(type).toHaveTextContent(onTypeValue);
+    })
   });
 });
