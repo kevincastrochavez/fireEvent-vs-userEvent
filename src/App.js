@@ -43,10 +43,11 @@ function App() {
           >
             This will have hover and click events assigned!
           </button>
-          <span data-testid='on-hover-span'>{onHoverActivated.toString()}</span>
-          <span data-testid='on-click-span'>{onClickActivated.toString()}</span>
+          <p data-testid='on-hover-span'>Hover: {onHoverActivated.toString()}</p>
+          <p data-testid='on-click-span'>Click: {onClickActivated.toString()}</p>
         </div>
       </section>
+      <hr />
       <section>
         <div>
           <input
@@ -55,8 +56,8 @@ function App() {
             onKeyDown={handleOnType}
             data-testid='input-target'
           />
-          <span data-testid='on-type-span'>{onTypeActivated.toString()}</span>
-          <span data-testid='on-focus-span'>{onFocusActivated.toString()}</span>
+          <p data-testid='on-type-span'>Type: {onTypeActivated.toString()}</p>
+          <p data-testid='on-focus-span'>Focus: {onFocusActivated.toString()}</p>
         </div>
       </section>
     </div>
